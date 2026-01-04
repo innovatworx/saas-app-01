@@ -139,13 +139,13 @@ const CompanionComponent = ({ companionId, subject, topic, name,
                             {userName}
                         </p>
                     </div>
-                    <button className="btn-mic" onClick={toggleMicrophone}>
+                    <button className="btn-mic" onClick={toggleMicrophone} disabled={callStatus !== CallStatus.ACTIVE}>
                         <Image
                             src={isMuted ? '/icons/mic-off.svg' : '/icons/mic-on.svg'}
                             alt="mic"
                             width={36} height={36}
                         />
-                        <p className="max-sm:hidden">
+                        <p className="max-sm:hidden" >
                             {isMuted ?
                                 'Turn on microphone' :
                                 'Turn off microphone'
@@ -174,10 +174,10 @@ const CompanionComponent = ({ companionId, subject, topic, name,
 
             <section className="transcript">
                 <div className="transcript-message no-scrollbar">
-                    {messages.map((message) => {
+                    {messages.map((message, index) => {
                         if(message.role === 'assistant') {
                             return (
-                                <p key={message.content}
+                                <p key={index}
                                     className="max-sm:text-sm">
                                     {name
                                         .split(' ')[0]
@@ -186,7 +186,7 @@ const CompanionComponent = ({ companionId, subject, topic, name,
                                 </p>
                             )
                         } else {
-                            return <p key={message.content} className="text-primary max-sm:text-sm">
+                            return <p key={index} className="text-primary max-sm:text-sm">
                                 {userName}: {message.content}
                             </p>
                         }
